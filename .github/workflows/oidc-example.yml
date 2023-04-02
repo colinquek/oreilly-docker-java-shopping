@@ -20,7 +20,7 @@ on:
     paths: ./shopfront/**
 
 jobs:
-  build:
+  run-oidc-test:
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
