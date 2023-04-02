@@ -21,6 +21,8 @@ on:
 
 jobs:
   run-oidc-test:
+    environment:
+    name: prod
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
