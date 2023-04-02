@@ -1,0 +1,34 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: OIDC Example
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout@v2
+on:
+  # https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+      tags:
+        description: "Test scenario tags"
+  push:
+    branches: [master]
+    paths: ./shopfront/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::565855172450:role/test_github
+          aws-region: ap-southeast-1
+      - name: Show default environment variables
+        run: |
+          aws sts get-caller-identity
+          aws ec2 describe-instances
